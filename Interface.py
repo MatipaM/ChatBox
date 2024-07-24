@@ -12,6 +12,11 @@ class Interface():
     suggestion = suggestions[suggestions.index("2.")+3:suggestions.index("3.")]
     inputBox = st.text_input("Message AI") #in second quoatations, put AI suggestions
     st.write(f"Suggestion: {suggestion}")
+    option = st.selectbox(
+     'Select which AI you would like to use',
+     ('friendly_ai', 'sophisticated_ai', 'ai'))
+
+    st.write('You selected:', option)
 
     def createConvo(inputBox, response, ai_type):
         conversations = [MessageFactory.createMessage('user',inputBox), MessageFactory.createMessage(ai_type, response['response'])]
@@ -22,15 +27,12 @@ class Interface():
         Conversation.get_instance().update()
         st.write(response['response'])
 
-    if st.button("Ask Friendly"):
-        response = API.get_instance().query_ai(f"write a friendly response to: {inputBox}")
-        createConvo(inputBox, response, 'friendly_ai')
-    elif st.button("Ask Sophisticated"):
-        response = API.get_instance().query_ai(f"write a sophisticated response to: {inputBox}")
-        createConvo(inputBox, response, 'sophisticated_ai')
-    elif st.button("Ask Normal"):
-        response = API.get_instance().query_ai(inputBox)
-        createConvo(inputBox, response, 'ai')
+    if st.button("Ask"):
+        response = API.get_instance().query_ai(f"write a {option} response to: {inputBox}")
+        createConvo(inputBox, response, option)
+
+
+    
 
 
         
