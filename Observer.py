@@ -5,7 +5,7 @@ import json
 class Observer:
     def notify(self, message:str):
         print("Observer code being called")
-        print(message)
+        print("message", message)
 
         if os.path.exists("Chat.json"):
             try:
